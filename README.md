@@ -45,6 +45,7 @@ mute
 unmute
 ```
 
+### Configuration object:
 The `toolbar's buttons` and the layout are fully configurable by Config Object. The Media Player Component is data driven component, which mean you can control it using by Data Object, e.t.c:
 ```
 const config = {
