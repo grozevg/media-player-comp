@@ -105,5 +105,4 @@ Generate `dist` folder with `app.bundle.js` and `index.html`.
 
 ### npm test
 
-Run tests. Running with Karma and Jasmine Framework. 
-```
+> Run tests. Running with Karma and Jasmine Framework. 
