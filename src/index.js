@@ -12,6 +12,7 @@ const root = document.getElementById('root');
 const button = Component('button', 'Add Custom Volume Button', '', 'mycustombtn');
 const buttonPosition = Component('button', 'Change Toolbar Position', '', 'mycustombtn');
 const buttonVideo = Component('button', 'Change Video', '', 'mycustombtn');
+const buttonLayout = Component('button', 'Change Layout and Styles', '', 'mycustombtn');
 
 
 mediaPlayer.addEventListener('ready', function () {
@@ -24,11 +25,13 @@ rightSide.appendChild(eventLogConsole);
 rightSide.appendChild(button);
 rightSide.appendChild(buttonPosition);
 rightSide.appendChild(buttonVideo);
+rightSide.appendChild(buttonLayout);
 root.appendChild(rightSide);
 
 button.addEventListener('click', addButton);
 buttonPosition.addEventListener('click', changePosition);
 buttonVideo.addEventListener('click', changeVideo);
+buttonLayout.addEventListener('click', changeLayoutAndStyles);
 
 function changeVideo() {
 	mediaPlayer.autoplay = true;
@@ -62,6 +65,29 @@ function unmutePlayer() {
 		mediaPlayer.unmute();
 	} else {
 		log('Custom button clicked, but the player is already unmuted!');
+	}
+}
+
+let flag = true;
+function changeLayoutAndStyles() { 
+	if (flag) {
+		mediaPlayer.toolbarHTML = `
+		<span class="displayTime"><span></span></span>
+		<div class="toolbar__buttons"></div>
+		`;
+		mediaPlayer.style = `
+			button {background:#ff000022;}
+			.toolbar {background:#ff000022;}
+			.displayTime {background:#ff000022; margin-left: 0; margin-right: auto;}
+		`;
+		buttonLayout.innerHTML = 'Reset Styles';
+		flag = false;
+	} else {
+		// Reset styles
+		buttonLayout.innerHTML = 'Change Layout and Styles';
+		mediaPlayer.toolbarHTML = '';
+		mediaPlayer.style = '';
+		flag = true;
 	}
 }
 

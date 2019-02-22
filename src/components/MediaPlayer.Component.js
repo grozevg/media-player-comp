@@ -20,6 +20,14 @@ class MediaPLayer extends HTMLElement {
 		if (configData.toolbar) {
 			this.toolbar = configData.toolbar;
 		}
+
+		if (configData.css) {
+			this.style = configData.css;
+		}
+
+		if (configData.toolbarHTML) {
+			this.toolbarHTML = configData.toolbarHTML;
+		}
 	}
 
 	get data() {
@@ -42,6 +50,35 @@ class MediaPLayer extends HTMLElement {
 
 	get toolbar() {
 		return this._config.toolbar;
+	}
+
+	set style (newStyles) {
+		let style;
+		if (this.$('#mp-customstyles')) {
+			style = this.$('#mp-customstyles');
+			style.textContent = newStyles;
+		} else {
+			style = document.createElement('style');
+			style.id = 'mp-customstyles';
+			style.textContent = newStyles;
+			this.shadowRoot.appendChild(style);
+		}
+	}
+
+	set toolbarHTML (newLayout) {
+		if (newLayout) {
+			this._refs.toolbar.innerHTML = newLayout;
+		} else {
+			let template = document.createElement('template');
+			template.innerHTML = html;
+			this._refs.toolbar.innerHTML = template.content.querySelector('.toolbar').innerHTML;
+			// template.content;
+			// this._refs.toolbar.innerHTML = template.;
+		}
+		this._refs.toolbar_buttons = this.$('.toolbar__buttons');
+		this._refs.displayTime = this.$('.displayTime span');
+		this.updateDisplayTime();
+		this.initToolbar();
 	}
 
 	togglePlay(e) {
@@ -250,9 +287,9 @@ class MediaPLayer extends HTMLElement {
 			displayTime: this.$('.displayTime span')
 		};
 
-		this._refs.video.addEventListener('canplay', () => { 
+		this._refs.video.addEventListener('canplay', () => {
 			this.dispatchEvent(new CustomEvent('canplay', { detail: this, composed: true }));
-			this.updateDisplayTime(); 
+			this.updateDisplayTime();
 		});
 		this._refs.video.addEventListener('timeupdate', () => { this.updateDisplayTime(); });
 	}
