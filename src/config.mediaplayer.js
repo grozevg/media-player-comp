@@ -1,8 +1,12 @@
 const config = {
+	toolbarHTML: '',
+	css: '',
+
 	video: [
 		'https://www.w3schools.com/tags/mov_bbb.mp4',
 		'https://www.w3schools.com/tags/mov_bbb.ogg'
 	],
+
 	toolbar: {
 		id: 'toolbar',
 		className: 'mytoolbar',
